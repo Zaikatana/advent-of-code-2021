@@ -5,7 +5,7 @@ def removeNewLine(string):
 f = open('input.txt', 'r')
 diagnostic = f.readlines()
 diagnosticCount = len(diagnostic)
-diagnostic = map(removeNewLine, diagnostic)
+diagnostic = list(map(removeNewLine, diagnostic))
 f.close()
 diagnosticLength = len(diagnostic[0])
 diagnosticOneCount = []
@@ -43,9 +43,7 @@ for k in range(0, len(gamma)):
         epsilon += '1'
 
 # convert binary to integer
-print gamma
 gamma = int(gamma, 2)
-print gamma
 epsilon = int(epsilon, 2)
 
-print gamma * epsilon
+print(gamma * epsilon)

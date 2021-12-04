@@ -5,11 +5,11 @@ def replaceAndConvert(num):
 
 f = open('input.txt', 'r')
 items = f.readlines()
-items = map(replaceAndConvert, items)
+items = list(map(replaceAndConvert, items))
 f.close()
 count = 0
 for i in range(1,len(items)):
     if items[i] > items[i-1]:
         count += 1
 
-print count
+print(count)

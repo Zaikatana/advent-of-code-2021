@@ -5,7 +5,7 @@ def removeNewLine(string):
 f = open('input.txt', 'r')
 diagnostic = f.readlines()
 diagnosticCount = len(diagnostic)
-diagnostic = map(removeNewLine, diagnostic)
+diagnostic = list(map(removeNewLine, diagnostic))
 f.close()
 diagnosticLength = len(diagnostic[0])
 diagnosticOneCount = []
@@ -59,4 +59,4 @@ for m in range(0,diagnosticLength):
         
 co2ScrubberRating = int(co2ScrubberRating[0], 2)
 
-print oxygenGeneratorRating * co2ScrubberRating
+print(oxygenGeneratorRating * co2ScrubberRating)

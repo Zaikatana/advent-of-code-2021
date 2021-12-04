@@ -5,7 +5,7 @@ def replaceAndConvert(cmd):
 
 f = open('input.txt', 'r')
 commands = f.readlines()
-commands = map(replaceAndConvert, commands)
+commands = list(map(replaceAndConvert, commands))
 depth = 0
 horizontal = 0
 aim = 0

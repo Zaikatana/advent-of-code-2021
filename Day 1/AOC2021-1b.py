@@ -5,7 +5,7 @@ def replaceAndConvert(num):
 
 f = open('input.txt', 'r')
 items = f.readlines()
-items = map(replaceAndConvert, items)
+items = list(map(replaceAndConvert, items))
 f.close()
 count = 0
 maxNum = items[0] + items[1] + items[2]
@@ -14,4 +14,4 @@ for i in range(1,len(items)-2):
     if maxNum < sum:
         count += 1
     maxNum = sum
-print count    
+print(count)    
