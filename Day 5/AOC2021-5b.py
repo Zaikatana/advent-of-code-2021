@@ -39,6 +39,44 @@ for coord in coordinates:
         endX = max(int(coord[0]), int(coord[2]))
         for x in range(startX,endX+1):
             graph[y][x] += 1
+    else:
+        # check gradient of 2 points
+        x1 = int(coord[0])
+        x2 = int(coord[2])
+        y1 = int(coord[1])
+        y2 = int(coord[3])
+        if x2-x1 != 0:
+            m = (y2-y1)/(x2-x1)
+            # if m is 1/-1, then it is a diagonal line of 45/-45 degrees
+            if m == 1:
+                x = min(x1,x2)
+                if x == x1:
+                    y = y1
+                    goalX = x2
+                    goalY = y2
+                else:
+                    y = y2
+                    goalX = x1
+                    goalY = y1
+                while x <= goalX and y <= goalY:
+                    graph[y][x] += 1
+                    x += 1
+                    y += 1
+            elif m== -1:
+                x = min(x1,x2)
+                if x == x1:
+                    y = y1
+                    goalX = x2
+                    goalY = y2
+                else:
+                    y = y2
+                    goalX = x1
+                    goalY = y1
+                while x <= goalX and y >= goalY:
+                    graph[y][x] += 1
+                    x += 1
+                    y -= 1
+
 
 answer = 0
 
