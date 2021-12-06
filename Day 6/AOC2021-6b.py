@@ -34,9 +34,7 @@ for j in range(0, 256):
             count[k] = originalCount[k+1]
 
 values = list(count.values())
-sum = 0
-for v in values:
-    sum += v
+sum = sum(values)
 
 print(sum)
 
