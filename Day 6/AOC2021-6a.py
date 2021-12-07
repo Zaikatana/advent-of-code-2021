@@ -1,4 +1,4 @@
-# Advent of Code 2021 Day  - Part 1
+# Advent of Code 2021 Day 6 - Part 1
 def removeNewLine(string):
     string = string.replace('\n','')
     initialState = string.split(',')
