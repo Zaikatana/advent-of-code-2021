@@ -16,7 +16,6 @@ points = {
     '{': 3,
     '<': 4,
 }
-validLines = []
 leftOvers = []
 
 # Load opening braces into a stack, if a closing brace is encountered, pop the brace and validate whether it is a matching brace
