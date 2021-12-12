@@ -3,6 +3,7 @@ def processData(string):
     string = string.replace('\n','')
     return string
 
+# Basic function that converts the coordinates into a bidirectional adjacency list graph
 def generateAdjList(nodes):
     adjList = {}
     for node in nodes:
@@ -36,7 +37,6 @@ def dfs(node,adjList,visited,path):
     for neighbour in neighbours:
         altVisited = visited.copy()
         size += dfs(neighbour,adjList,altVisited,path)
-
     return size
 
 f = open('input.txt', 'r')
@@ -45,11 +45,7 @@ nodes = list(map(processData, nodes))
 f.close()
 
 adjList = generateAdjList(nodes)
-
-print(adjList)
 visited = {}
 
 answer = dfs('start',adjList,visited,'')
-
 print(answer)
-
