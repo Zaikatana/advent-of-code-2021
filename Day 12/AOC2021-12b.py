@@ -36,7 +36,6 @@ def dfs(node,adjList,visited,path,paths):
     path += node + ' '
     if node == 'end':
         paths.add(path)
-        print(path)
         return
     # return if visited
     if node in visited:

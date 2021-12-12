@@ -23,7 +23,6 @@ def dfs(node,adjList,visited,path):
     # return 1 if end is reached
     path += node + ' '
     if node == 'end':
-        print(path)
         return 1
     # return 0 if visited
     if node in visited:
