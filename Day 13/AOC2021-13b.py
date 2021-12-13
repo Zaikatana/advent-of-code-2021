@@ -65,12 +65,10 @@ def fold(command,graph):
         for y in range(len(graph)):
             graphA.append(graph[y][0:pos])
             graphB.append(list(reversed(graph[y][pos+1:])))
-    #print(graphA)
-    #print(graphB)
     newGraph = combine(graphA,graphB)
-    #print(newGraph)
     return newGraph
 
+# Merge 2 arrays together
 def combine(graphA,graphB):
     graphALen = len(graphA) * len(graphA[0])
     graphBLen = len(graphB) * len(graphB[0])
