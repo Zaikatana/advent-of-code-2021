@@ -23,59 +23,23 @@ def alreadyFlashed(num):
     else:
         return 1
 
+# Better way to get neighbours
+def getNeighbours(coord,octopi):
+    neighbours = []
+    operations = [(0,1),(1,0),(0,-1),(-1,0),(1,1),(1,-1),(-1,1),(-1,-1)]
+    for operation in operations:
+        xAdd = coord.x+operation[0]
+        yAdd = coord.y+operation[1]
+        if xAdd >= 0 and xAdd < len(octopi[0]) and yAdd >= 0 and yAdd < len(octopi):
+            neighbours.append(Coordinate(xAdd,yAdd))
+    return neighbours
+
 def flash(coord, octopi):
     x = coord.x
     y = coord.y
-    if x == 0 and y == 0:
-        octopi[y][x+1] += alreadyFlashed(octopi[y][x+1])
-        octopi[y+1][x+1] += alreadyFlashed(octopi[y+1][x+1])
-        octopi[y+1][x] += alreadyFlashed(octopi[y+1][x])
-    elif x == 0 and y == len(octopi) - 1:
-        octopi[y][x+1] += alreadyFlashed(octopi[y][x+1])
-        octopi[y-1][x] += alreadyFlashed(octopi[y-1][x])
-        octopi[y-1][x+1] += alreadyFlashed(octopi[y-1][x+1])
-    elif x == len(octopi[y]) - 1 and y == 0:
-        octopi[y][x-1] += alreadyFlashed(octopi[y][x-1])
-        octopi[y+1][x] += alreadyFlashed(octopi[y+1][x])
-        octopi[y+1][x-1] += alreadyFlashed(octopi[y+1][x-1])
-    elif x == len(octopi[y]) - 1 and y == len(octopi) - 1:
-        octopi[y][x-1] += alreadyFlashed(octopi[y][x-1])
-        octopi[y-1][x] += alreadyFlashed(octopi[y-1][x])
-        octopi[y-1][x-1] += alreadyFlashed(octopi[y-1][x-1])
-    else:
-        if x == 0:
-            octopi[y+1][x] += alreadyFlashed(octopi[y+1][x])
-            octopi[y-1][x] += alreadyFlashed(octopi[y-1][x])
-            octopi[y][x+1] += alreadyFlashed(octopi[y][x+1])
-            octopi[y-1][x+1] += alreadyFlashed(octopi[y-1][x+1])
-            octopi[y+1][x+1] += alreadyFlashed(octopi[y+1][x+1])
-        elif x == len(octopi[y]) - 1:
-            octopi[y+1][x] += alreadyFlashed(octopi[y+1][x])
-            octopi[y-1][x] += alreadyFlashed(octopi[y-1][x])
-            octopi[y][x-1] += alreadyFlashed(octopi[y][x-1])
-            octopi[y-1][x-1] += alreadyFlashed(octopi[y-1][x-1])
-            octopi[y+1][x-1] += alreadyFlashed(octopi[y+1][x-1])
-        elif y == 0:
-            octopi[y][x+1] += alreadyFlashed(octopi[y][x+1])
-            octopi[y][x-1] += alreadyFlashed(octopi[y][x-1])
-            octopi[y+1][x] += alreadyFlashed(octopi[y+1][x])
-            octopi[y+1][x+1] += alreadyFlashed(octopi[y+1][x+1])
-            octopi[y+1][x-1] += alreadyFlashed(octopi[y+1][x-1])
-        elif y == len(octopi) - 1:
-            octopi[y][x-1] += alreadyFlashed(octopi[y][x-1])
-            octopi[y][x+1] += alreadyFlashed(octopi[y][x+1])
-            octopi[y-1][x-1] += alreadyFlashed(octopi[y-1][x-1])
-            octopi[y-1][x+1] += alreadyFlashed(octopi[y-1][x+1])
-            octopi[y-1][x] += alreadyFlashed(octopi[y-1][x])
-        else:
-            octopi[y][x-1] += alreadyFlashed(octopi[y][x-1])
-            octopi[y][x+1] += alreadyFlashed(octopi[y][x+1])
-            octopi[y-1][x-1] += alreadyFlashed(octopi[y-1][x-1])
-            octopi[y-1][x+1] += alreadyFlashed(octopi[y-1][x+1])
-            octopi[y-1][x] += alreadyFlashed(octopi[y-1][x])
-            octopi[y+1][x-1] += alreadyFlashed(octopi[y+1][x-1])
-            octopi[y+1][x+1] += alreadyFlashed(octopi[y+1][x+1])
-            octopi[y+1][x] += alreadyFlashed(octopi[y+1][x])
+    neighbours = getNeighbours(coord,octopi)
+    for neighbour in neighbours:
+        octopi[neighbour.y][neighbour.x] += alreadyFlashed(octopi[neighbour.y][neighbour.x])
 
 f = open('input.txt', 'r')
 octopi = f.readlines()
