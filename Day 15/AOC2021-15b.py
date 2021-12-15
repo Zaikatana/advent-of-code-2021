@@ -6,6 +6,17 @@ def processData(string):
     string = string.replace('\n','')
     return string
 
+# Better way to get neighbours
+def getNeighbours(x,y,matrix,cost):
+    neighbours = []
+    operations = [(0,1),(1,0),(0,-1),(-1,0)]
+    for operation in operations:
+        xAdd = x+operation[0]
+        yAdd = y+operation[1]
+        if xAdd >= 0 and xAdd < len(matrix[0]) and yAdd >= 0 and yAdd < len(matrix):
+            neighbours.append((cost + matrix[yAdd][xAdd], (xAdd,yAdd)))
+    return neighbours
+
 # Utilise Dijkstra with Priority Queue to Find the shortest Path from top left to bottom right
 def dijkstra(matrix):
     # Priority queue will automatically sort tuples inserted into queue by cost in ascending order. O(logn) insertion time.
@@ -25,37 +36,7 @@ def dijkstra(matrix):
             break
         else:
             # grab neighbours... need to find a cleaner way of doing this in python
-            neighbours = []
-            if x == 0 and y == 0:
-                neighbours.append((cost+matrix[y][x+1], (x+1,y)))  
-                neighbours.append((cost+matrix[y+1][x], (x,y+1)))
-            elif x == 0 and y == len(matrix) - 1:
-                neighbours.append((cost+matrix[y][x+1], (x+1,y)))  
-                neighbours.append((cost+matrix[y-1][x], (x,y-1)))
-            elif x == len(matrix[0]) - 1 and y == 0:
-                neighbours.append((cost+matrix[y+1][x], (x,y+1)))
-                neighbours.append((cost+matrix[y][x-1], (x-1,y)))
-            elif x == 0:
-                neighbours.append((cost+matrix[y][x+1], (x+1,y)))  
-                neighbours.append((cost+matrix[y+1][x], (x,y+1)))
-                neighbours.append((cost+matrix[y-1][x], (x,y-1)))
-            elif y == 0:
-                neighbours.append((cost+matrix[y][x+1], (x+1,y)))  
-                neighbours.append((cost+matrix[y+1][x], (x,y+1)))
-                neighbours.append((cost+matrix[y][x-1], (x-1,y)))
-            elif x == len(matrix[0]) - 1:
-                neighbours.append((cost+matrix[y+1][x], (x,y+1)))
-                neighbours.append((cost+matrix[y-1][x], (x,y-1)))
-                neighbours.append((cost+matrix[y][x-1], (x-1,y)))
-            elif y == len(matrix) - 1:
-                neighbours.append((cost+matrix[y][x+1], (x+1,y)))
-                neighbours.append((cost+matrix[y-1][x], (x,y-1)))
-                neighbours.append((cost+matrix[y][x-1], (x-1,y)))
-            else:
-                neighbours.append((cost+matrix[y][x+1], (x+1,y)))  
-                neighbours.append((cost+matrix[y+1][x], (x,y+1)))
-                neighbours.append((cost+matrix[y-1][x], (x,y-1)))
-                neighbours.append((cost+matrix[y][x-1], (x-1,y)))
+            neighbours = getNeighbours(x,y,matrix,cost)
             for neighbour in neighbours:
                 neighbourX = neighbour[1][0]
                 neighbourY = neighbour[1][1]
