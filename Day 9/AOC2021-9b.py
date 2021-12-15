@@ -11,49 +11,19 @@ class Coordinate:
         self.x = x
         self.y = y
 
-# Retrieve Neighbours
-def getNeighbours(coord):
-    x = coord.x
-    y = coord.y
+# Better way to get neighbours
+def getNeighbours(coord,heightMap):
     neighbours = []
-    if x == 0 and y == 0:
-        neighbours.append(Coordinate(x+1,y))
-        neighbours.append(Coordinate(x,y+1))
-    elif x == 0 and y == len(heightMap) - 1:
-        neighbours.append(Coordinate(x+1,y))
-        neighbours.append(Coordinate(x,y-1))
-    elif x == len(heightMap[y]) - 1 and y == 0:
-        neighbours.append(Coordinate(x-1,y))
-        neighbours.append(Coordinate(x,y+1))
-    elif x == len(heightMap[y]) - 1 and y == len(heightMap) - 1:
-        neighbours.append(Coordinate(x-1,y))
-        neighbours.append(Coordinate(x,y-1))
-    else:
-        if x == 0:
-            neighbours.append(Coordinate(x,y+1))
-            neighbours.append(Coordinate(x,y-1))
-            neighbours.append(Coordinate(x+1,y))
-        elif x == len(heightMap[y]) - 1:
-            neighbours.append(Coordinate(x-1,y))
-            neighbours.append(Coordinate(x,y+1))
-            neighbours.append(Coordinate(x,y-1))
-        elif y == 0:
-            neighbours.append(Coordinate(x+1,y))
-            neighbours.append(Coordinate(x-1,y))
-            neighbours.append(Coordinate(x,y+1))
-        elif y == len(heightMap) - 1:
-            neighbours.append(Coordinate(x+1,y))
-            neighbours.append(Coordinate(x-1,y))
-            neighbours.append(Coordinate(x,y-1))
-        else:
-            neighbours.append(Coordinate(x-1,y))
-            neighbours.append(Coordinate(x+1,y))
-            neighbours.append(Coordinate(x,y+1))
-            neighbours.append(Coordinate(x,y-1))
+    operations = [(0,1),(1,0),(0,-1),(-1,0)]
+    for operation in operations:
+        xAdd = coord.x+operation[0]
+        yAdd = coord.y+operation[1]
+        if xAdd >= 0 and xAdd < len(heightMap[0]) and yAdd >= 0 and yAdd < len(heightMap):
+            neighbours.append(Coordinate(xAdd,yAdd))
     return neighbours
 
 # Depth First Search Function - Essentially traverse neighbours until you reach a visited coordinate/coordinate of height 9
-def dfs(coord,visitedMap):
+def dfs(coord,visitedMap,heightMap):
     x = coord.x
     y = coord.y
     size = 0
@@ -66,9 +36,9 @@ def dfs(coord,visitedMap):
         return 0
     else:
         size += 1
-        neighbours = getNeighbours(coord)
+        neighbours = getNeighbours(coord,heightMap)
         for neighbour in neighbours:
-            size += dfs(neighbour,visitedMap)
+            size += dfs(neighbour,visitedMap,heightMap)
     return size
 
 f = open('input.txt', 'r')
@@ -113,7 +83,7 @@ for y in range(0, len(heightMap)):
 poolSizes = []
 for points in lowPoints:
     visitedMap = {}
-    size = dfs(points,visitedMap)
+    size = dfs(points,visitedMap,heightMap)
     poolSizes.append(size)
 
 # Sort Pool Sizes to find the 3 largest Pools
