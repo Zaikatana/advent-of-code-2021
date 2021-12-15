@@ -66,6 +66,34 @@ def dijkstra(matrix):
                     queue.put(neighbour)
     return spMatrix[len(matrix) - 1][len(matrix[0]) - 1]
 
+# Add Num to each value in Matrix
+def addMatrix(matrix,num):
+    if num == 0:
+        return matrix.copy()
+    newMatrix = []
+    for y in range(len(matrix)):
+        newMatrixRow = []
+        for x in range(len(matrix[0])):
+            total = matrix[y][x] + num
+            if total > 9:
+                total = 1 + ((total-1) - 9)
+            newMatrixRow.append(total)
+        newMatrix.append(newMatrixRow)
+    return newMatrix
+
+# Generate the big Matrix
+def generateMatrix(matrix):
+    bigMatrix = []
+    for i in range(5):
+        matrixA = addMatrix(matrix.copy(),i)
+        matrixB = addMatrix(matrix.copy(),i+1)
+        matrixC = addMatrix(matrix.copy(),i+2)
+        matrixD = addMatrix(matrix.copy(),i+3)
+        matrixE = addMatrix(matrix.copy(),i+4)
+        for j in range(len(matrix)):
+            bigMatrix.append(matrixA[j]+matrixB[j]+matrixC[j]+matrixD[j]+matrixE[j])
+    return bigMatrix
+
 f = open('input.txt', 'r')
 data = f.readlines()
 data = list(map(processData, data))
@@ -77,5 +105,6 @@ for lines in data:
     for c in lines:
         line.append(int(c))
     matrix.append(line)
-answer = dijkstra(matrix)
+bigMatrix = generateMatrix(matrix)
+answer = dijkstra(bigMatrix)
 print(answer)
